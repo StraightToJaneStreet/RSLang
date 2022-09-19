@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  line-height: 1.3
+}
+
+.games-page {
+  display: flex;
+  width: 100%;
+  color:white;
+  background: linear-gradient(to bottom, #a2cfe9, #265887)
+}
+
+.games{
+  max-width: 1000px;
+  padding: 0 15px;
+  margin: 70px auto;
+}
+
+h1 {
+  text-align: center;
+  text-transform: uppercase;
+}
+  
+.games__container{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.game-card {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  padding: 30px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+}
+
+img{
+  width: 90%;
+  border-radius: 10px;
+}
+
+      

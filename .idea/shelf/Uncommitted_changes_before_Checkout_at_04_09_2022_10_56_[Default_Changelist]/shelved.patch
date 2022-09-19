@@ -1,0 +1,31 @@
+Index: .idea/workspace.xml
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,15 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="0d1af047-13aa-4956-b14c-fe7a01128c12" name="Default Changelist" comment="">
+-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/App.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/components/footer/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/components/footer/footer.css" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/pages/Games/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/Games/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/pages/Main/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/Main/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/pages/Team/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/Team/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/pages/Team/team.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/Team/team.css" afterDir="false" />
+-    </list>
++    <list default="true" id="0d1af047-13aa-4956-b14c-fe7a01128c12" name="Default Changelist" comment="" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -147,7 +139,7 @@
+       <workItem from="1662189025970" duration="10929000" />
+       <workItem from="1662207673156" duration="5536000" />
+       <workItem from="1662214141148" duration="2283000" />
+-      <workItem from="1662219654957" duration="2805000" />
++      <workItem from="1662219654957" duration="3452000" />
+     </task>
+     <servers />
+   </component>

@@ -1,0 +1,277 @@
+Index: src/services/interfaces/IAuthService.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import IAuthParams from './IAuthParams';\n\ninterface IAuthService {\n  authorize: (params: IAuthParams) => Promise<boolean>;\n  start: () => void;\n}\n\nexport default IAuthService;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/services/interfaces/IAuthService.ts b/src/services/interfaces/IAuthService.ts
+--- a/src/services/interfaces/IAuthService.ts	(revision ed374e8a244ea12f13b42ee57b92e873ba5601ff)
++++ b/src/services/interfaces/IAuthService.ts	(date 1661270263924)
+@@ -3,6 +3,7 @@
+ interface IAuthService {
+   authorize: (params: IAuthParams) => Promise<boolean>;
+   start: () => void;
++  logout: () => void;
+ }
+ 
+ export default IAuthService;
+Index: src/services/AuthService.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { Auth, langApi } from '../generated/services/langApi';\nimport store from '../model/store';\nimport { injectable } from 'inversify';\nimport { setAuthMessage, successAuth } from '../model/feature/auth';\nimport IAuthService from './interfaces/IAuthService';\nimport IAuthParams from './interfaces/IAuthParams';\nimport { setUserInfo } from '../model/feature/user';\nimport IUserInfo from './interfaces/IUserInfo';\nimport {\n  isCustomError,\n  isFetchError,\n  isParsingError,\n  isSerializedError,\n  isSuccessResponse,\n  isUnknownError,\n} from './utils/ErrorResposne';\n\n@injectable()\nexport default class AuthService implements IAuthService {\n  async authorize(params: IAuthParams): Promise<boolean> {\n    const result = langApi.endpoints.postSignin.initiate({ body: params });\n    const sub = store.dispatch(result);\n\n    return sub.then((response) => {\n      if (isSuccessResponse<Auth>(response)) {\n        const { data: userInfo } = response;\n\n        store.dispatch(successAuth());\n\n        this.setUserData(userInfo);\n        return true;\n      }\n\n      const error = response.error;\n\n      let message = '';\n\n      if (isSerializedError(error)) {\n        message = error.message ?? 'Неизвестная ошибка';\n      } else if (isUnknownError(error)) {\n        message = 'Неизвестная ошибка';\n      } else if (isParsingError(error)) {\n        message = error.data ?? 'Неизвестная ошибка';\n      } else if (isFetchError(error) || isCustomError(error)) {\n        message = error.error;\n      } else {\n        throw Error('Undefined behavior');\n      }\n\n      store.dispatch(setAuthMessage(message));\n\n      return false;\n    });\n  }\n\n  start(): void {\n    const userInfo = JSON.parse(localStorage.getItem('userInfo') as string);\n    this.setUserData(userInfo);\n  }\n\n  protected setUserData(userInfo: IUserInfo): void {\n    const thunk = setUserInfo({\n      name: userInfo?.name,\n      userId: userInfo?.userId,\n      token: userInfo?.token,\n      refreshToken: userInfo?.refreshToken,\n    });\n\n    store.dispatch(thunk);\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/services/AuthService.ts b/src/services/AuthService.ts
+--- a/src/services/AuthService.ts	(revision ed374e8a244ea12f13b42ee57b92e873ba5601ff)
++++ b/src/services/AuthService.ts	(date 1661270263924)
+@@ -1,10 +1,10 @@
+ import { Auth, langApi } from '../generated/services/langApi';
+ import store from '../model/store';
+ import { injectable } from 'inversify';
+-import { setAuthMessage, successAuth } from '../model/feature/auth';
++import { clearMessage, setAuthMessage, successAuth } from "../model/feature/auth";
+ import IAuthService from './interfaces/IAuthService';
+ import IAuthParams from './interfaces/IAuthParams';
+-import { setUserInfo } from '../model/feature/user';
++import { setUserInfo } from "../model/feature/user";
+ import IUserInfo from './interfaces/IUserInfo';
+ import {
+   isCustomError,
+@@ -26,7 +26,7 @@
+         const { data: userInfo } = response;
+ 
+         store.dispatch(successAuth());
+-
++        clearMessage();
+         this.setUserData(userInfo);
+         return true;
+       }
+@@ -58,6 +58,10 @@
+     this.setUserData(userInfo);
+   }
+ 
++  logout(): void {
++    this.setUserData({});
++  }
++
+   protected setUserData(userInfo: IUserInfo): void {
+     const thunk = setUserInfo({
+       name: userInfo?.name,
+Index: src/view/components/header/Header.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport { useSelector } from 'react-redux';\nimport userSlice from '../../../model/feature/user';\nimport { RootState } from '../../../model/store';\n\nimport AppBar from '@mui/material/AppBar';\nimport Toolbar from '@mui/material/Toolbar';\nimport Button from '@mui/material/Button';\n\nimport { Link } from 'react-router-dom';\nimport AuthModal from '../AuthModal';\n\nconst Header = () => {\n  const userInfo = useSelector((state: RootState) => state[userSlice.name]);\n\n  return (\n    <AppBar position=\"sticky\">\n      <Toolbar>\n        <Button component={Link} to=\"/\" color=\"inherit\">\n          Главная\n        </Button>\n        <Button component={Link} to=\"/dictionary\" color=\"inherit\">\n          Словарь\n        </Button>\n        <Button component={Link} to=\"/games\" color=\"inherit\">\n          Мини-игры\n        </Button>\n        <Button component={Link} to=\"/stats\" color=\"inherit\">\n          Статистика\n        </Button>\n        <Button component={Link} to=\"/team\" color=\"inherit\">\n          О команде\n        </Button>\n      </Toolbar>\n      {userInfo.name?.length ? userInfo.name : <AuthModal />}\n    </AppBar>\n  );\n};\n\nexport default Header;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/components/header/Header.tsx b/src/view/components/header/Header.tsx
+--- a/src/view/components/header/Header.tsx	(revision ed374e8a244ea12f13b42ee57b92e873ba5601ff)
++++ b/src/view/components/header/Header.tsx	(date 1661270469114)
+@@ -9,6 +9,7 @@
+ 
+ import { Link } from 'react-router-dom';
+ import AuthModal from '../AuthModal';
++import UserLink from "../UserLink";
+ 
+ const Header = () => {
+   const userInfo = useSelector((state: RootState) => state[userSlice.name]);
+@@ -32,7 +33,7 @@
+           О команде
+         </Button>
+       </Toolbar>
+-      {userInfo.name?.length ? userInfo.name : <AuthModal />}
++      {userInfo.name?.length ? <UserLink /> : <AuthModal />}
+     </AppBar>
+   );
+ };
+Index: src/view/pages/Main/index.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport { Outlet } from 'react-router-dom';\n\nimport Box from '@mui/material/Box';\n\nconst Main = () => {\n  return (\n    <Box sx={{ display: 'flex', flexDirection: 'column' }}>\n      <h1>Hello Main!</h1>\n      <Box>\n        <Outlet />\n      </Box>\n    </Box>\n  );\n};\n\nexport default Main;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/pages/Main/index.tsx b/src/view/pages/Main/index.tsx
+--- a/src/view/pages/Main/index.tsx	(revision ed374e8a244ea12f13b42ee57b92e873ba5601ff)
++++ b/src/view/pages/Main/index.tsx	(date 1661270609474)
+@@ -1,15 +1,35 @@
+ import React from 'react';
+-import { Outlet } from 'react-router-dom';
++import { Link, Outlet } from 'react-router-dom';
+ 
+ import Box from '@mui/material/Box';
++import AppBar from '@mui/material/AppBar';
++import Toolbar from '@mui/material/Toolbar';
++import Button from '@mui/material/Button';
++import AuthModal from '../../components/AuthModal';
++import { useSelector } from 'react-redux';
++import { RootState } from '../../../model/store';
++import userSlice from '../../../model/feature/user';
++import Footer from '../../components/footer/footer';
+ 
+ const Main = () => {
++  const userInfo = useSelector((state: RootState) => state[userSlice.name]);
+   return (
+     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+-      <h1>Hello Main!</h1>
++      <AppBar position="sticky">
++        <Toolbar>
++          <Button component={Link} to="/dictionary" color="inherit">
++            Dictionary
++          </Button>
++          <Button component={Link} to="/games" color="inherit">
++            Games
++          </Button>
++        </Toolbar>
++        {userInfo.name?.length ? userInfo.name : <AuthModal />}
++      </AppBar>
+       <Box>
+         <Outlet />
+       </Box>
++      <Footer />
+     </Box>
+   );
+ };
+Index: src/model/feature/user.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { createSlice, PayloadAction } from '@reduxjs/toolkit';\nimport IUserInfo from '../../services/interfaces/IUserInfo';\n\nconst initialState: IUserInfo = {\n  name: '',\n  userId: '',\n  token: '',\n  refreshToken: '',\n};\n\nconst slice = createSlice({\n  name: 'userSlice',\n  initialState,\n  reducers: {\n    setUserInfo(state, { payload }: PayloadAction<IUserInfo>) {\n      state.name = payload.name;\n      state.userId = payload.userId;\n      state.token = payload.token;\n      state.refreshToken = payload.refreshToken;\n      localStorage.setItem('userInfo', JSON.stringify(payload));\n    },\n\n    resetUserInfo(state, _: PayloadAction<void>) {\n      state.name = '';\n      state.userId = '';\n      state.token = '';\n      state.refreshToken = '';\n      localStorage.removeItem('userInfo');\n    },\n  },\n});\n\nexport default slice;\nexport const { setUserInfo, resetUserInfo } = slice.actions;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/model/feature/user.ts b/src/model/feature/user.ts
+--- a/src/model/feature/user.ts	(revision ed374e8a244ea12f13b42ee57b92e873ba5601ff)
++++ b/src/model/feature/user.ts	(date 1661270263924)
+@@ -19,16 +19,8 @@
+       state.refreshToken = payload.refreshToken;
+       localStorage.setItem('userInfo', JSON.stringify(payload));
+     },
+-
+-    resetUserInfo(state, _: PayloadAction<void>) {
+-      state.name = '';
+-      state.userId = '';
+-      state.token = '';
+-      state.refreshToken = '';
+-      localStorage.removeItem('userInfo');
+-    },
+   },
+ });
+ 
+ export default slice;
+-export const { setUserInfo, resetUserInfo } = slice.actions;
++export const { setUserInfo } = slice.actions;
+Index: src/view/components/UserLink.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/components/UserLink.tsx b/src/view/components/UserLink.tsx
+new file mode 100644
+--- /dev/null	(date 1661270263924)
++++ b/src/view/components/UserLink.tsx	(date 1661270263924)
+@@ -0,0 +1,22 @@
++import * as React from 'react';
++import { useSelector } from "react-redux";
++import { RootState } from "../../model/store";
++import userSlice from "../../model/feature/user";
++import DIContainer from "../../DI/DIContainer";
++import IAuthService from "../../services/interfaces/IAuthService";
++import DI_TYPES from "../../DI/DITypes";
++import { Logout } from "@mui/icons-material";
++import Button from "@mui/material/Button";
++
++const UserLink = () => {
++  const authService = DIContainer.get<IAuthService>(DI_TYPES.AuthService);
++  const handleClick = () => { authService.logout();} ;
++  const userInfo = useSelector((state: RootState) => state[userSlice.name]);
++  return (
++    <div className="auth-link">
++      { userInfo.name } <Button color="secondary" onClick={handleClick}><Logout /></Button>
++    </div>
++  );
++};
++
++export default UserLink;
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"name\": \"aync-race\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"build\": \"webpack --env mode=prod\",\n    \"serve\": \"webpack serve --env mode=dev\",\n    \"rollup:build\": \"rollup -c rollup.config.prod.js\",\n    \"rollup:serve\": \"rollup -c rollup.config.dev.js -w\",\n    \"lint\": \"eslint ./src/\",\n    \"lint:fix\": \"eslint ./src --fix\",\n    \"format\": \"prettier --ignore-path .gitignore --write \\\"**/*.+(js|jsx|tsx|ts|json)\\\"\",\n    \"test\": \"jest\"\n  },\n  \"dependencies\": {\n    \"@babel/plugin-transform-typescript\": \"^7.18.12\",\n    \"@babel/preset-react\": \"^7.18.6\",\n    \"@babel/preset-typescript\": \"^7.18.6\",\n    \"@emotion/react\": \"^11.10.0\",\n    \"@emotion/styled\": \"^11.10.0\",\n    \"@hookform/resolvers\": \"^2.9.7\",\n    \"@mui/lab\": \"^5.0.0-alpha.95\",\n    \"@mui/material\": \"^5.10.1\",\n    \"@reduxjs/toolkit\": \"^1.8.3\",\n    \"@rollup/plugin-babel\": \"^5.3.1\",\n    \"@rollup/plugin-commonjs\": \"^22.0.1\",\n    \"@rollup/plugin-html\": \"^0.2.4\",\n    \"@rollup/plugin-node-resolve\": \"^13.3.0\",\n    \"@rollup/plugin-replace\": \"^4.0.0\",\n    \"@rollup/plugin-typescript\": \"^8.3.3\",\n    \"@rtk-query/codegen-openapi\": \"^1.0.0\",\n    \"@types/jest\": \"^28.1.6\",\n    \"@types/react\": \"^18.0.15\",\n    \"@types/react-dom\": \"^18.0.6\",\n    \"@types/react-redux\": \"^7.1.24\",\n    \"@typescript-eslint/eslint-plugin\": \"^5.30.7\",\n    \"@typescript-eslint/parser\": \"^5.30.7\",\n    \"clean-webpack-plugin\": \"^4.0.0\",\n    \"copy-webpack-plugin\": \"^11.0.0\",\n    \"css-loader\": \"^6.7.1\",\n    \"eslint\": \"^8.20.0\",\n    \"eslint-config-airbnb\": \"^19.0.4\",\n    \"eslint-config-airbnb-base\": \"^15.0.0\",\n    \"eslint-config-airbnb-typescript\": \"^17.0.0\",\n    \"eslint-config-prettier\": \"^8.5.0\",\n    \"eslint-import-resolver-webpack\": \"^0.13.2\",\n    \"eslint-plugin-import\": \"^2.26.0\",\n    \"eslint-plugin-prettier\": \"^4.2.1\",\n    \"eslint-plugin-react\": \"^7.30.1\",\n    \"eslint-plugin-react-hooks\": \"^4.6.0\",\n    \"html-webpack-plugin\": \"^5.5.0\",\n    \"inversify\": \"^6.0.1\",\n    \"jest\": \"^28.1.3\",\n    \"node-sass\": \"^7.0.1\",\n    \"prettier\": \"^2.7.1\",\n    \"react\": \"18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"react-hook-form\": \"^7.34.2\",\n    \"react-redux\": \"8.0.2\",\n    \"react-router\": \"^6.3.0\",\n    \"react-router-dom\": \"^6.3.0\",\n    \"reflect-metadata\": \"^0.1.13\",\n    \"rollup\": \"^2.75.7\",\n    \"rollup-plugin-import-css\": \"^3.0.3\",\n    \"rollup-plugin-livereload\": \"^2.0.5\",\n    \"rollup-plugin-scss\": \"^3.0.0\",\n    \"rollup-plugin-serve\": \"^2.0.0\",\n    \"sass-loader\": \"^13.0.2\",\n    \"style-loader\": \"^3.3.1\",\n    \"ts-jest\": \"^28.0.7\",\n    \"ts-loader\": \"^9.3.1\",\n    \"ts-node\": \"^10.9.1\",\n    \"tslib\": \"^2.4.0\",\n    \"typescript\": \"^4.7.4\",\n    \"webpack\": \"^5.73.0\",\n    \"webpack-cli\": \"^4.10.0\",\n    \"webpack-dev-server\": \"^4.9.3\",\n    \"zod\": \"^3.18.0\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\"\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package.json b/package.json
+--- a/package.json	(revision ed374e8a244ea12f13b42ee57b92e873ba5601ff)
++++ b/package.json	(date 1661270263924)
+@@ -20,6 +20,7 @@
+     "@emotion/react": "^11.10.0",
+     "@emotion/styled": "^11.10.0",
+     "@hookform/resolvers": "^2.9.7",
++    "@mui/icons-material": "^5.10.2",
+     "@mui/lab": "^5.0.0-alpha.95",
+     "@mui/material": "^5.10.1",
+     "@reduxjs/toolkit": "^1.8.3",
+Index: package-lock.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package-lock.json b/package-lock.json
+--- a/package-lock.json	(revision ed374e8a244ea12f13b42ee57b92e873ba5601ff)
++++ b/package-lock.json	(date 1661270263924)
+@@ -15,6 +15,7 @@
+         "@emotion/react": "^11.10.0",
+         "@emotion/styled": "^11.10.0",
+         "@hookform/resolvers": "^2.9.7",
++        "@mui/icons-material": "^5.10.2",
+         "@mui/lab": "^5.0.0-alpha.95",
+         "@mui/material": "^5.10.1",
+         "@reduxjs/toolkit": "^1.8.3",
+@@ -1867,6 +1868,31 @@
+         "url": "https://opencollective.com/mui"
+       }
+     },
++    "node_modules/@mui/icons-material": {
++      "version": "5.10.2",
++      "resolved": "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.10.2.tgz",
++      "integrity": "sha512-p7ku+43JeKRz0ONGzPZbRXZRbE7vCKP1Cr8l/Yj9sUIGVQ6CM/m37u6udacJZkDXD+G2FoxJPixrVvvjx6f64w==",
++      "dependencies": {
++        "@babel/runtime": "^7.17.2"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui"
++      },
++      "peerDependencies": {
++        "@mui/material": "^5.0.0",
++        "@types/react": "^17.0.0 || ^18.0.0",
++        "react": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
+     "node_modules/@mui/lab": {
+       "version": "5.0.0-alpha.95",
+       "resolved": "https://registry.npmjs.org/@mui/lab/-/lab-5.0.0-alpha.95.tgz",
+@@ -14924,6 +14950,14 @@
+       "resolved": "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.10.1.tgz",
+       "integrity": "sha512-zyzLkVSqi+WuxG8UZrrOaWbhHkDK+MlHFjLpL+vqUVU6iSUaDYREu1xoLWEQsWOznT4oT2iEiGZLpQLgkn+WiA=="
+     },
++    "@mui/icons-material": {
++      "version": "5.10.2",
++      "resolved": "https://registry.npmjs.org/@mui/icons-material/-/icons-material-5.10.2.tgz",
++      "integrity": "sha512-p7ku+43JeKRz0ONGzPZbRXZRbE7vCKP1Cr8l/Yj9sUIGVQ6CM/m37u6udacJZkDXD+G2FoxJPixrVvvjx6f64w==",
++      "requires": {
++        "@babel/runtime": "^7.17.2"
++      }
++    },
+     "@mui/lab": {
+       "version": "5.0.0-alpha.95",
+       "resolved": "https://registry.npmjs.org/@mui/lab/-/lab-5.0.0-alpha.95.tgz",

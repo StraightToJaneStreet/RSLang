@@ -1,0 +1,558 @@
+Index: src/components/Register.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import * as React from 'react';\r\nimport {\r\n  Box,\r\n  FormControlLabel,\r\n  FormGroup,\r\n  FormHelperText,\r\n  TextField,\r\n  Typography,\r\n} from '@mui/material';\r\nimport { useForm, SubmitHandler } from 'react-hook-form';\r\nimport { object, string, TypeOf } from 'zod';\r\nimport { zodResolver } from '@hookform/resolvers/zod';\r\nimport { useEffect, useState } from 'react';\r\nimport { LoadingButton } from '@mui/lab';\r\nimport Checkbox from '@mui/material/Checkbox';\r\n\r\n\r\nconst registerSchema = object({\r\n  name: string()\r\n    .nonempty('Поле Логин обязательно для заполнения')\r\n    .max(32, 'Максимум 32 символа для логина'),\r\n  email: string().nonempty('Поле Email обязательно для заполнения').email('Неверно указан Email'),\r\n  password: string()\r\n    .nonempty('Пароль обязателен для заполнения')\r\n    .min(8, 'Password must be more than 8 characters')\r\n    .max(32, 'Password must be less than 32 characters'),\r\n  passwordConfirm: string().nonempty('Please confirm your password'),\r\n}).refine((data) => data.password === data.passwordConfirm, {\r\n  path: ['passwordConfirm'],\r\n  message: 'Пароли не совпадают',\r\n});\r\n\r\ntype RegisterInput = TypeOf<typeof registerSchema>;\r\n\r\nconst RegisterPage = () => {\r\n  const [loading] = useState(false);\r\n\r\n  const {\r\n    register,\r\n    formState: { errors, isSubmitSuccessful },\r\n    reset,\r\n    handleSubmit,\r\n  } = useForm<RegisterInput>({\r\n    resolver: zodResolver(registerSchema),\r\n  });\r\n\r\n  useEffect(() => {\r\n    if (isSubmitSuccessful) {\r\n      reset();\r\n    }\r\n    // eslint-disable-next-line react-hooks/exhaustive-deps\r\n  }, [isSubmitSuccessful]);\r\n\r\n  const onSubmitHandler: SubmitHandler<RegisterInput> = (values: []) => {\r\n    console.log(values);\r\n  };\r\n  console.log(errors);\r\n\r\n  return (\r\n    <Box sx={{ maxWidth: '30rem' }}>\r\n      <Typography variant='h4' component='h1' sx={{ mb: '2rem' }}>\r\n        Register\r\n      </Typography>\r\n      <Box\r\n        component='form'\r\n        noValidate\r\n        autoComplete='off'\r\n        onSubmit={handleSubmit(onSubmitHandler)}\r\n      >\r\n        <TextField\r\n          sx={{ mb: 2 }}\r\n          label='Name'\r\n          fullWidth\r\n          required\r\n          error={!!errors['name']}\r\n          helperText={errors['name'] ? errors['name'].message : ''}\r\n          {...register('name')}\r\n        />\r\n        <TextField\r\n          sx={{ mb: 2 }}\r\n          label='Email'\r\n          fullWidth\r\n          required\r\n          type='email'\r\n          error={!!errors['email']}\r\n          helperText={errors['email'] ? errors['email'].message : ''}\r\n          {...register('email')}\r\n        />\r\n        <TextField\r\n          sx={{ mb: 2 }}\r\n          label='Password'\r\n          fullWidth\r\n          required\r\n          type='password'\r\n          error={!!errors['password']}\r\n          helperText={errors['password'] ? errors['password'].message : ''}\r\n          {...register('password')}\r\n        />\r\n        <TextField\r\n          sx={{ mb: 2 }}\r\n          label='Confirm Password'\r\n          fullWidth\r\n          required\r\n          type='password'\r\n          error={!!errors['passwordConfirm']}\r\n          helperText={\r\n            errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''\r\n          }\r\n          {...register('passwordConfirm')}\r\n        />\r\n\r\n        <FormGroup>\r\n          <FormControlLabel\r\n            control={<Checkbox required />}\r\n            {...register('terms')}\r\n            label={\r\n              <Typography color={errors['terms'] ? 'error' : 'inherit'}>\r\n                Accept Terms and Conditions\r\n              </Typography>\r\n            }\r\n          />\r\n          <FormHelperText error={!!errors['terms']}>\r\n            {errors['terms'] ? errors['terms'].message : ''}\r\n          </FormHelperText>\r\n        </FormGroup>\r\n\r\n        <LoadingButton\r\n          variant='contained'\r\n          fullWidth\r\n          type='submit'\r\n          loading={loading}\r\n          sx={{ py: '0.8rem', mt: '1rem' }}\r\n        >\r\n          Register\r\n        </LoadingButton>\r\n      </Box>\r\n    </Box>\r\n  );\r\n};\r\n\r\nexport default RegisterPage;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/Register.tsx b/src/components/Register.tsx
+--- a/src/components/Register.tsx	
++++ b/src/components/Register.tsx	
+@@ -1,30 +1,26 @@
+ import * as React from 'react';
+-import {
+-  Box,
+-  FormControlLabel,
+-  FormGroup,
+-  FormHelperText,
+-  TextField,
+-  Typography,
+-} from '@mui/material';
++import { Alert, Box, TextField } from "@mui/material";
+ import { useForm, SubmitHandler } from 'react-hook-form';
+ import { object, string, TypeOf } from 'zod';
+ import { zodResolver } from '@hookform/resolvers/zod';
+-import { useEffect, useState } from 'react';
++import { useState } from 'react';
+ import { LoadingButton } from '@mui/lab';
+-import Checkbox from '@mui/material/Checkbox';
+-
++import DIContainer from "../DI/DIContainer";
++import DI_TYPES from "../DI/DITypes";
++import IRegisterService from "../services/interfaces/IRegisterService";
++import { useSelector } from "react-redux";
++import { RootState } from "../model/store";
++import errorResponseSlice from "../model/feature/auth";
+ 
+ const registerSchema = object({
+-  name: string()
+-    .nonempty('Поле Логин обязательно для заполнения')
++  login: string()
++    .min(1, 'Поле "Логин" обязательно для заполнения')
+     .max(32, 'Максимум 32 символа для логина'),
+-  email: string().nonempty('Поле Email обязательно для заполнения').email('Неверно указан Email'),
++  email: string().email('Неверно указан Email'),
+   password: string()
+-    .nonempty('Пароль обязателен для заполнения')
+-    .min(8, 'Password must be more than 8 characters')
+-    .max(32, 'Password must be less than 32 characters'),
+-  passwordConfirm: string().nonempty('Please confirm your password'),
++    .min(8, 'Минимальная длина пароля 8 символов')
++    .max(32, 'Максимальная длина пароля 32 символа'),
++  passwordConfirm: string().min(1, 'Поле "Подтверждение пароля" обязательно для заполнения')
+ }).refine((data) => data.password === data.passwordConfirm, {
+   path: ['passwordConfirm'],
+   message: 'Пароли не совпадают',
+@@ -35,103 +31,83 @@
+ const RegisterPage = () => {
+   const [loading] = useState(false);
+ 
++  const registerService = DIContainer.get<IRegisterService>(DI_TYPES.RegisterService);
+   const {
+     register,
+-    formState: { errors, isSubmitSuccessful },
++    formState: { errors },
+     reset,
+     handleSubmit,
+   } = useForm<RegisterInput>({
+     resolver: zodResolver(registerSchema),
+   });
+ 
+-  useEffect(() => {
+-    if (isSubmitSuccessful) {
++  const Auth = useSelector((state: RootState) => state[errorResponseSlice.name]);
++
++  const onSubmitHandler: SubmitHandler<RegisterInput> = async (values) => {
++    const { login: name, email, password } = values;
++    const result = await registerService.createUser({ name, email, password });
++    if (result) {
+       reset();
+     }
+-    // eslint-disable-next-line react-hooks/exhaustive-deps
+-  }, [isSubmitSuccessful]);
+-
+-  const onSubmitHandler: SubmitHandler<RegisterInput> = (values: []) => {
+-    console.log(values);
+   };
+-  console.log(errors);
+ 
+   return (
+-    <Box sx={{ maxWidth: '30rem' }}>
+-      <Typography variant='h4' component='h1' sx={{ mb: '2rem' }}>
+-        Register
+-      </Typography>
++    <Box sx={{ maxWidth: "30rem" }}>
+       <Box
+-        component='form'
++        component="form"
+         noValidate
+-        autoComplete='off'
++        autoComplete="off"
+         onSubmit={handleSubmit(onSubmitHandler)}
+       >
++        {Auth.isRegisterSuccess ?
++          <Alert sx={{ mb: 2 }} severity="success">Вы успешно зарегистрировались</Alert> : ""}
++
++        {Auth.registerErrorMessage ?
++          <Alert sx={{ mb: 2 }} severity="error">Ошибка: {Auth.registerErrorMessage}</Alert> : ""}
++
+         <TextField
+           sx={{ mb: 2 }}
+-          label='Name'
++          label="Логин"
+           fullWidth
+           required
+-          error={!!errors['name']}
+-          helperText={errors['name'] ? errors['name'].message : ''}
+-          {...register('name')}
+-        />
++          error={!!errors["login"]}
++          helperText={errors["login"] ? errors["login"].message : ""}
++          {...register("login")} />
+         <TextField
+           sx={{ mb: 2 }}
+-          label='Email'
++          label="Email"
+           fullWidth
+           required
+-          type='email'
+-          error={!!errors['email']}
+-          helperText={errors['email'] ? errors['email'].message : ''}
+-          {...register('email')}
+-        />
++          type="email"
++          error={!!errors["email"]}
++          helperText={errors["email"] ? errors["email"].message : ""}
++          {...register("email")} />
+         <TextField
+           sx={{ mb: 2 }}
+-          label='Password'
++          label="Пароль"
+           fullWidth
+           required
+-          type='password'
+-          error={!!errors['password']}
+-          helperText={errors['password'] ? errors['password'].message : ''}
+-          {...register('password')}
+-        />
++          type="password"
++          error={!!errors["password"]}
++          helperText={errors["password"] ? errors["password"].message : ""}
++          {...register("password")} />
+         <TextField
+           sx={{ mb: 2 }}
+-          label='Confirm Password'
++          label="Подтверждение пароля"
+           fullWidth
+           required
+-          type='password'
+-          error={!!errors['passwordConfirm']}
+-          helperText={
+-            errors['passwordConfirm'] ? errors['passwordConfirm'].message : ''
+-          }
+-          {...register('passwordConfirm')}
+-        />
+-
+-        <FormGroup>
+-          <FormControlLabel
+-            control={<Checkbox required />}
+-            {...register('terms')}
+-            label={
+-              <Typography color={errors['terms'] ? 'error' : 'inherit'}>
+-                Accept Terms and Conditions
+-              </Typography>
+-            }
+-          />
+-          <FormHelperText error={!!errors['terms']}>
+-            {errors['terms'] ? errors['terms'].message : ''}
+-          </FormHelperText>
+-        </FormGroup>
+-
++          type="password"
++          error={!!errors["passwordConfirm"]}
++          helperText={errors["passwordConfirm"] ? errors["passwordConfirm"].message : ""}
++          {...register("passwordConfirm")} />
+         <LoadingButton
+-          variant='contained'
++          variant="contained"
+           fullWidth
+-          type='submit'
++          type="submit"
+           loading={loading}
+-          sx={{ py: '0.8rem', mt: '1rem' }}
++          sx={{ py: "0.8rem", mt: "1rem" }}
+         >
+-          Register
++          Зарегистрироваться
+         </LoadingButton>
+       </Box>
+     </Box>
+Index: src/model/store.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { combineReducers, configureStore } from '@reduxjs/toolkit';\nimport { langApiBase } from '../generated/langApiBase';\n// import { langApi } from '../generated/services/langApi';\n\nconst store = configureStore({\n  reducer: combineReducers({\n    [langApiBase.reducerPath]: langApiBase.reducer,\n  }),\n\n  middleware: (gDM) => gDM().concat(langApiBase.middleware),\n});\n\nexport type RootState = ReturnType<typeof store.getState>;\n\nexport default store;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/model/store.ts b/src/model/store.ts
+--- a/src/model/store.ts	
++++ b/src/model/store.ts	
+@@ -1,15 +1,17 @@
+ import { combineReducers, configureStore } from '@reduxjs/toolkit';
+ import { langApiBase } from '../generated/langApiBase';
+-// import { langApi } from '../generated/services/langApi';
++import errorResponseSlice from "./feature/auth";
++import userSlice from "./feature/user";
+ 
+ const store = configureStore({
+   reducer: combineReducers({
+     [langApiBase.reducerPath]: langApiBase.reducer,
++    [errorResponseSlice.name]: errorResponseSlice.reducer,
++    [userSlice.name]: userSlice.reducer
+   }),
+ 
+   middleware: (gDM) => gDM().concat(langApiBase.middleware),
+ });
+ 
+ export type RootState = ReturnType<typeof store.getState>;
+-
+ export default store;
+Index: src/components/Auth.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import * as React from 'react';\r\nimport Box from '@mui/material/Box';\r\nimport TextField from '@mui/material/TextField';\r\nimport Button from '@mui/material/Button';\r\n\r\nconst Auth = () => {\r\n\r\n    return (\r\n        <Box\r\n            component=\"form\"\r\n            sx={{\r\n                '& > :not(style)': { m: 1, width: '25ch' },\r\n            }}\r\n            noValidate\r\n            autoComplete=\"off\"\r\n        >\r\n            <TextField id=\"login\" label=\"Логин\" variant=\"outlined\" />\r\n            <TextField id=\"password\" label=\"Пароль\" variant=\"outlined\" />\r\n            <Button variant=\"outlined\">Авторизоваться</Button>\r\n        </Box>\r\n    );\r\n}\r\n\r\nexport default Auth;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/components/Auth.tsx b/src/components/Auth.tsx
+--- a/src/components/Auth.tsx	
++++ b/src/components/Auth.tsx	
+@@ -1,24 +1,94 @@
+ import * as React from 'react';
+-import Box from '@mui/material/Box';
+-import TextField from '@mui/material/TextField';
+-import Button from '@mui/material/Button';
++import { Alert, Box, TextField } from "@mui/material";
++import { useForm, SubmitHandler } from 'react-hook-form';
++import { object, string, TypeOf } from 'zod';
++import { zodResolver } from '@hookform/resolvers/zod';
++import { useState } from 'react';
++import { LoadingButton } from '@mui/lab';
++import DIContainer from "../DI/DIContainer";
++import DI_TYPES from "../DI/DITypes";
++import { useSelector } from "react-redux";
++import { RootState } from "../model/store";
++import errorResponseSlice from "../model/feature/auth";
++import IAuthService from "../services/interfaces/IAuthService";
++
++const registerSchema = object({
++  email: string().email('Неверно указан Email'),
++  password: string()
++    .min(8, 'Минимальная длина пароля 8 символов')
++    .max(32, 'Максимальная длина пароля 32 символа'),
++});
+ 
+-const Auth = () => {
++type AuthInput = TypeOf<typeof registerSchema>;
++
++const AuthPage = () => {
++  const [loading] = useState(false);
++
++  const authService = DIContainer.get<IAuthService>(DI_TYPES.AuthService);
++  const {
++    register,
++    formState: { errors },
++    reset,
++    handleSubmit,
++  } = useForm<AuthInput>({
++    resolver: zodResolver(registerSchema),
++  });
++
++  const Auth = useSelector((state: RootState) => state[errorResponseSlice.name]);
++
++  const onSubmitHandler: SubmitHandler<AuthInput> = async (values) => {
++    const result = await authService.authorize(values);
++    if (result) {
++      reset();
++    }
++  };
+ 
+-    return (
++  return (
++      <Box sx={{ maxWidth: "30rem" }}>
+         <Box
+-            component="form"
+-            sx={{
+-                '& > :not(style)': { m: 1, width: '25ch' },
+-            }}
+-            noValidate
+-            autoComplete="off"
++          component="form"
++          noValidate
++          autoComplete="off"
++          onSubmit={handleSubmit(onSubmitHandler)}
+         >
+-            <TextField id="login" label="Логин" variant="outlined" />
+-            <TextField id="password" label="Пароль" variant="outlined" />
+-            <Button variant="outlined">Авторизоваться</Button>
++          {Auth.isAuthSuccess ?
++            <Alert sx={{ mb: 2 }} severity="success">Вы успешно авторизовались</Alert> : ""}
++
++          {Auth.authErrorMessage ?
++            <Alert sx={{ mb: 2 }} severity="error">Ошибка: {Auth.authErrorMessage}</Alert> : ""}
++
++          <TextField
++            sx={{ mb: 2 }}
++            label="Email"
++            fullWidth
++            required
++            type="email"
++            error={!!errors["email"]}
++            helperText={errors["email"] ? errors["email"].message : ""}
++            {...register("email")} />
++          <TextField
++            sx={{ mb: 2 }}
++            label="Пароль"
++            fullWidth
++            required
++            type="password"
++            error={!!errors["password"]}
++            helperText={errors["password"] ? errors["password"].message : ""}
++            {...register("password")} />
++
++          <LoadingButton
++            variant="contained"
++            fullWidth
++            type="submit"
++            loading={loading}
++            sx={{ py: "0.8rem", mt: "1rem" }}
++          >
++            Авторизоваться
++          </LoadingButton>
++
+         </Box>
+-    );
+-}
++      </Box>
++  );
++};
+ 
+-export default Auth;
++export default AuthPage;
+\ No newline at end of file
+Index: src/App.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport { injectable } from 'inversify';\n\nimport IApp from './IApp';\n\nimport AppView from './view/App';\n\n@injectable()\nexport default class App implements IApp {\n  private reactRoot: ReactDOM.Root | null = null;\n\n  run(root: HTMLDivElement) {\n    this.reactRoot = ReactDOM.createRoot(root);\n    this.render();\n  }\n\n  private render() {\n    this.reactRoot?.render(React.createElement(AppView, {}, null));\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.ts b/src/App.ts
+--- a/src/App.ts	
++++ b/src/App.ts	
+@@ -5,6 +5,9 @@
+ import IApp from './IApp';
+ 
+ import AppView from './view/App';
++import DIContainer from "./DI/DIContainer";
++import IAuthService from "./services/interfaces/IAuthService";
++import DI_TYPES from "./DI/DITypes";
+ 
+ @injectable()
+ export default class App implements IApp {
+@@ -12,6 +15,7 @@
+ 
+   run(root: HTMLDivElement) {
+     this.reactRoot = ReactDOM.createRoot(root);
++    DIContainer.get<IAuthService>(DI_TYPES.AuthService).start();
+     this.render();
+   }
+ 
+Index: package.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"name\": \"aync-race\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"build\": \"webpack --env mode=prod\",\n    \"serve\": \"webpack serve --env mode=dev\",\n    \"rollup:build\": \"rollup -c rollup.config.prod.js\",\n    \"rollup:serve\": \"rollup -c rollup.config.dev.js -w\",\n    \"lint\": \"eslint ./src/\",\n    \"lint:fix\": \"eslint ./src --fix\",\n    \"format\": \"prettier --ignore-path .gitignore --write \\\"**/*.+(js|jsx|tsx|ts|json)\\\"\",\n    \"test\": \"jest\"\n  },\n  \"dependencies\": {\n    \"@babel/plugin-transform-typescript\": \"^7.18.12\",\n    \"@babel/preset-react\": \"^7.18.6\",\n    \"@babel/preset-typescript\": \"^7.18.6\",\n    \"@emotion/react\": \"^11.10.0\",\n    \"@emotion/styled\": \"^11.10.0\",\n    \"@hookform/resolvers\": \"^2.9.7\",\n    \"@mui/material\": \"^5.10.1\",\n    \"@reduxjs/toolkit\": \"^1.8.3\",\n    \"@rollup/plugin-babel\": \"^5.3.1\",\n    \"@rollup/plugin-commonjs\": \"^22.0.1\",\n    \"@rollup/plugin-html\": \"^0.2.4\",\n    \"@rollup/plugin-node-resolve\": \"^13.3.0\",\n    \"@rollup/plugin-replace\": \"^4.0.0\",\n    \"@rollup/plugin-typescript\": \"^8.3.3\",\n    \"@rtk-query/codegen-openapi\": \"^1.0.0\",\n    \"@types/jest\": \"^28.1.6\",\n    \"@types/react\": \"^18.0.15\",\n    \"@types/react-dom\": \"^18.0.6\",\n    \"@types/react-redux\": \"^7.1.24\",\n    \"@typescript-eslint/eslint-plugin\": \"^5.30.7\",\n    \"@typescript-eslint/parser\": \"^5.30.7\",\n    \"clean-webpack-plugin\": \"^4.0.0\",\n    \"copy-webpack-plugin\": \"^11.0.0\",\n    \"css-loader\": \"^6.7.1\",\n    \"eslint-config-airbnb\": \"^19.0.4\",\n    \"eslint-config-airbnb-base\": \"^15.0.0\",\n    \"eslint-config-airbnb-typescript\": \"^17.0.0\",\n    \"eslint-config-prettier\": \"^8.5.0\",\n    \"eslint-import-resolver-webpack\": \"^0.13.2\",\n    \"eslint-plugin-import\": \"^2.26.0\",\n    \"eslint-plugin-prettier\": \"^4.2.1\",\n    \"eslint-plugin-react\": \"^7.30.1\",\n    \"eslint-plugin-react-hooks\": \"^4.6.0\",\n    \"html-webpack-plugin\": \"^5.5.0\",\n    \"inversify\": \"^6.0.1\",\n    \"jest\": \"^28.1.3\",\n    \"node-sass\": \"^7.0.1\",\n    \"prettier\": \"^2.7.1\",\n    \"react\": \"18.2.0\",\n    \"react-dom\": \"^18.2.0\",\n    \"react-hook-form\": \"^7.34.2\",\n    \"react-redux\": \"8.0.2\",\n    \"react-router\": \"^6.3.0\",\n    \"react-router-dom\": \"^6.3.0\",\n    \"reflect-metadata\": \"^0.1.13\",\n    \"rollup\": \"^2.75.7\",\n    \"rollup-plugin-import-css\": \"^3.0.3\",\n    \"rollup-plugin-livereload\": \"^2.0.5\",\n    \"rollup-plugin-scss\": \"^3.0.0\",\n    \"rollup-plugin-serve\": \"^2.0.0\",\n    \"sass-loader\": \"^13.0.2\",\n    \"style-loader\": \"^3.3.1\",\n    \"ts-jest\": \"^28.0.7\",\n    \"ts-loader\": \"^9.3.1\",\n    \"ts-node\": \"^10.9.1\",\n    \"tslib\": \"^2.4.0\",\n    \"typescript\": \"^4.7.4\",\n    \"webpack\": \"^5.73.0\",\n    \"webpack-cli\": \"^4.10.0\",\n    \"webpack-dev-server\": \"^4.9.3\",\n    \"zod\": \"^3.18.0\"\n  },\n  \"keywords\": [],\n  \"author\": \"\",\n  \"license\": \"ISC\",\n  \"devDependencies\": {\n    \"eslint\": \"^8.22.0\"\n  }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package.json b/package.json
+--- a/package.json	
++++ b/package.json	
+@@ -20,6 +20,7 @@
+     "@emotion/react": "^11.10.0",
+     "@emotion/styled": "^11.10.0",
+     "@hookform/resolvers": "^2.9.7",
++    "@mui/lab": "^5.0.0-alpha.95",
+     "@mui/material": "^5.10.1",
+     "@reduxjs/toolkit": "^1.8.3",
+     "@rollup/plugin-babel": "^5.3.1",
+Index: package-lock.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/package-lock.json b/package-lock.json
+--- a/package-lock.json	
++++ b/package-lock.json	
+@@ -15,6 +15,7 @@
+         "@emotion/react": "^11.10.0",
+         "@emotion/styled": "^11.10.0",
+         "@hookform/resolvers": "^2.9.7",
++        "@mui/lab": "^5.0.0-alpha.95",
+         "@mui/material": "^5.10.1",
+         "@reduxjs/toolkit": "^1.8.3",
+         "@rollup/plugin-babel": "^5.3.1",
+@@ -1868,6 +1869,46 @@
+         "url": "https://opencollective.com/mui"
+       }
+     },
++    "node_modules/@mui/lab": {
++      "version": "5.0.0-alpha.95",
++      "resolved": "https://registry.npmjs.org/@mui/lab/-/lab-5.0.0-alpha.95.tgz",
++      "integrity": "sha512-JdJKhn0qJjk0ejtmsiZ/8e08uUzr8MZsASGbmY2VbGC7WlCntgjZrWmhuvQf3hWCtSfuD6tbCdPpz6A2NL5nVQ==",
++      "dependencies": {
++        "@babel/runtime": "^7.17.2",
++        "@mui/base": "5.0.0-alpha.93",
++        "@mui/system": "^5.10.1",
++        "@mui/utils": "^5.9.3",
++        "clsx": "^1.2.1",
++        "prop-types": "^15.8.1",
++        "react-is": "^18.2.0"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/mui"
++      },
++      "peerDependencies": {
++        "@emotion/react": "^11.5.0",
++        "@emotion/styled": "^11.3.0",
++        "@mui/material": "^5.0.0",
++        "@types/react": "^17.0.0 || ^18.0.0",
++        "react": "^17.0.0 || ^18.0.0",
++        "react-dom": "^17.0.0 || ^18.0.0"
++      },
++      "peerDependenciesMeta": {
++        "@emotion/react": {
++          "optional": true
++        },
++        "@emotion/styled": {
++          "optional": true
++        },
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
+     "node_modules/@mui/material": {
+       "version": "5.10.1",
+       "resolved": "https://registry.npmjs.org/@mui/material/-/material-5.10.1.tgz",
+@@ -14939,6 +14980,20 @@
+       "resolved": "https://registry.npmjs.org/@mui/core-downloads-tracker/-/core-downloads-tracker-5.10.1.tgz",
+       "integrity": "sha512-zyzLkVSqi+WuxG8UZrrOaWbhHkDK+MlHFjLpL+vqUVU6iSUaDYREu1xoLWEQsWOznT4oT2iEiGZLpQLgkn+WiA=="
+     },
++    "@mui/lab": {
++      "version": "5.0.0-alpha.95",
++      "resolved": "https://registry.npmjs.org/@mui/lab/-/lab-5.0.0-alpha.95.tgz",
++      "integrity": "sha512-JdJKhn0qJjk0ejtmsiZ/8e08uUzr8MZsASGbmY2VbGC7WlCntgjZrWmhuvQf3hWCtSfuD6tbCdPpz6A2NL5nVQ==",
++      "requires": {
++        "@babel/runtime": "^7.17.2",
++        "@mui/base": "5.0.0-alpha.93",
++        "@mui/system": "^5.10.1",
++        "@mui/utils": "^5.9.3",
++        "clsx": "^1.2.1",
++        "prop-types": "^15.8.1",
++        "react-is": "^18.2.0"
++      }
++    },
+     "@mui/material": {
+       "version": "5.10.1",
+       "resolved": "https://registry.npmjs.org/@mui/material/-/material-5.10.1.tgz",
+Index: src/DI/DITypes.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const DI_TYPES = {\n  App: Symbol.for('App'),\n};\n\nexport default DI_TYPES;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DI/DITypes.ts b/src/DI/DITypes.ts
+--- a/src/DI/DITypes.ts	
++++ b/src/DI/DITypes.ts	
+@@ -1,5 +1,7 @@
+ const DI_TYPES = {
+   App: Symbol.for('App'),
++  RegisterService: Symbol.for('Register'),
++  AuthService: Symbol.for('Auth')
+ };
+ 
+ export default DI_TYPES;
+Index: src/DI/DIContainer.ts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'reflect-metadata';\nimport { Container } from 'inversify';\n\nimport DI_TYPES from './DITypes';\n\nimport IApp from '../IApp';\nimport App from '../App';\n\nconst DIContainer = new Container();\n\nDIContainer.bind<IApp>(DI_TYPES.App).to(App).inSingletonScope();\n\nexport default DIContainer;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DI/DIContainer.ts b/src/DI/DIContainer.ts
+--- a/src/DI/DIContainer.ts	
++++ b/src/DI/DIContainer.ts	
+@@ -5,9 +5,15 @@
+ 
+ import IApp from '../IApp';
+ import App from '../App';
++import IRegisterService from "../services/interfaces/IRegisterService";
++import RegisterService from "../services/RegisterService";
++import IAuthService from "../services/interfaces/IAuthService";
++import AuthService from "../services/AuthService";
+ 
+ const DIContainer = new Container();
+ 
+ DIContainer.bind<IApp>(DI_TYPES.App).to(App).inSingletonScope();
++DIContainer.bind<IRegisterService>(DI_TYPES.RegisterService).to(RegisterService).inSingletonScope();
++DIContainer.bind<IAuthService>(DI_TYPES.AuthService).to(AuthService).inSingletonScope();
+ 
+ export default DIContainer;
+Index: src/view/pages/Main/index.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport { Link, Outlet } from 'react-router-dom';\n\nimport Box from '@mui/material/Box';\nimport AppBar from '@mui/material/AppBar';\nimport Toolbar from '@mui/material/Toolbar';\nimport Button from '@mui/material/Button';\nimport AuthModal from '../../../components/AuthModal';\n\nconst Main = () => {\n  return (\n    <Box sx={{ display: 'flex', flexDirection: 'column' }}>\n      <AppBar position=\"sticky\">\n        <Toolbar>\n          <Button component={Link} to=\"/dictionary\" color=\"inherit\">\n            Dictionary\n          </Button>\n          <Button component={Link} to=\"/games\" color=\"inherit\">\n            Games\n          </Button>\n        </Toolbar>\n        <AuthModal />\n      </AppBar>\n      <Box>\n        <Outlet />\n      </Box>\n    </Box>\n  );\n};\n\nexport default Main;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/view/pages/Main/index.tsx b/src/view/pages/Main/index.tsx
+--- a/src/view/pages/Main/index.tsx	
++++ b/src/view/pages/Main/index.tsx	
+@@ -6,8 +6,12 @@
+ import Toolbar from '@mui/material/Toolbar';
+ import Button from '@mui/material/Button';
+ import AuthModal from '../../../components/AuthModal';
++import { useSelector } from "react-redux";
++import { RootState } from "../../../model/store";
++import userSlice from "../../../model/feature/user";
+ 
+ const Main = () => {
++  const userInfo = useSelector((state: RootState) => state[userSlice.name]);
+   return (
+     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+       <AppBar position="sticky">
+@@ -19,7 +23,7 @@
+             Games
+           </Button>
+         </Toolbar>
+-        <AuthModal />
++        { userInfo.name?.length ? userInfo.name : <AuthModal /> }
+       </AppBar>
+       <Box>
+         <Outlet />

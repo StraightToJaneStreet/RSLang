@@ -1,0 +1,15 @@
+body {
+  margin: 5px;
+}
+
+.application {
+  width: 100%;
+  max-width: 1280px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.word {
+  border: 1px solid black;
+}

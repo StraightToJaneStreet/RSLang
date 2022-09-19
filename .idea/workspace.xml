@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c5829f39-023a-486e-8f69-cbf80c083344" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/pages/Dictionary/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/Dictionary/index.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="stats-final" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="StraightToJaneStreet" />
+        <option name="repository" value="RSLang" />
+      </RepoCoordinatesHolder>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/node_modules/@reduxjs/toolkit/dist/query/endpointDefinitions.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/view/pages/Statistics/index.tsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/model/feature/auth.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/services/interfaces/IStatisticService.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/services/StatisticService.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/services/WordsService.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/view/pages/Dictionary/WordCard.tsx" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
+  <component name="ProjectId" id="2Da9gJB57HljVn35gQmvnqpKhpf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/view/pages/Statistics" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="\\wsl$\Ubuntu\home\laiker\RSLang\node_modules\prettier" />
+    <property name="ts.external.directory.path" value="\\wsl$\Ubuntu\home\laiker\RSLang\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="\\wsl$\Ubuntu\home\laiker\RSLang\src\view\pages\Statistics" />
+      <recent name="\\wsl$\Ubuntu\home\laiker\RSLang\src\model\feature" />
+      <recent name="\\wsl$\Ubuntu\home\laiker\RSLang\src\view\pages\Dictionary\HardWords" />
+      <recent name="\\wsl$\Ubuntu\home\laiker\RSLang\templates" />
+      <recent name="\\wsl$\Ubuntu\home\laiker\RSLang\src\services\interfaces" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="\\wsl$\Ubuntu\home\laiker\RSLang" />
+      <recent name="\\wsl$\Ubuntu\home\laiker\RSLang\src\services\Utils" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="lint fix" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <arguments value="fix" />
+      <node-interpreter value="wsl://Ubuntu@/usr/local/bin/node" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.lint fix" />
+        <item itemvalue="npm.lint fix" />
+        <item itemvalue="npm.lint fix" />
+        <item itemvalue="npm.lint fix" />
+        <item itemvalue="npm.lint fix" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c5829f39-023a-486e-8f69-cbf80c083344" name="Changes" comment="" />
+      <created>1660926439883</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1660926439883</updated>
+      <workItem from="1660926442645" duration="181000" />
+      <workItem from="1660926639839" duration="200000" />
+      <workItem from="1660926855880" duration="448000" />
+      <workItem from="1660927321478" duration="142000" />
+      <workItem from="1660927478065" duration="188000" />
+      <workItem from="1660927685146" duration="3510000" />
+      <workItem from="1661057243998" duration="12298000" />
+      <workItem from="1661074275543" duration="21288000" />
+      <workItem from="1661102029466" duration="171000" />
+      <workItem from="1661102326545" duration="407000" />
+      <workItem from="1661103043093" duration="395000" />
+      <workItem from="1661171891566" duration="5387000" />
+      <workItem from="1661182258022" duration="6213000" />
+      <workItem from="1661260269367" duration="11502000" />
+      <workItem from="1661350923548" duration="4857000" />
+      <workItem from="1661435407334" duration="8448000" />
+      <workItem from="1661623002998" duration="1040000" />
+      <workItem from="1661951337876" duration="1797000" />
+      <workItem from="1662053078982" duration="2414000" />
+      <workItem from="1662135119925" duration="4188000" />
+      <workItem from="1662189025970" duration="10929000" />
+      <workItem from="1662207673156" duration="5536000" />
+      <workItem from="1662214141148" duration="2283000" />
+      <workItem from="1662219654957" duration="2805000" />
+      <workItem from="1662487259833" duration="563000" />
+      <workItem from="1662556223359" duration="13623000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="auth-logout" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

@@ -1,0 +1,82 @@
+.game-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  background-color: #a2cfe9;
+  min-height: calc(100vh - 60px);
+}
+
+.game-wrapper{
+  width: 400px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 0 rgb(0 0 0 / 30%);
+}
+
+.head{
+  width: 100%
+}
+
+.top{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.series-answers{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin: 20px auto 10px;
+}
+
+.item{
+  width: 18px;
+  height: 18px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+.item.success {
+    background-color: #2e7d32;
+}
+
+.item.error {
+    background-color: #c62828;
+}
+
+.word{
+  font-size: 1.6em;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.word span {
+  display: block;
+}
+
+.word-english{
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.answers-btn{
+    display: grid;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 40px 12px;
+    grid-template-columns: 1fr 1fr;
+}

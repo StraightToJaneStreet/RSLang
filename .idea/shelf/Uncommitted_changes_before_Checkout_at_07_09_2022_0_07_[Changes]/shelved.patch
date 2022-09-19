@@ -1,0 +1,83 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"c5829f39-023a-486e-8f69-cbf80c083344\" name=\"Changes\" comment=\"\">\n      <change afterPath=\"$PROJECT_DIR$/src/view/pages/Dictionary/HardWords/index.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/model/api/private/userWords.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/model/api/private/userWords.ts\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/model/feature/dictionary.ts\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/model/feature/dictionary.ts\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/view/App.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/view/App.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/view/pages/Dictionary/WordCard.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/view/pages/Dictionary/WordCard.tsx\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/view/pages/Dictionary/index.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/view/pages/Dictionary/index.tsx\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ComposerSettings\">\n    <execution />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"TypeScript File\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"development\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n    <option name=\"RESET_MODE\" value=\"HARD\" />\n  </component>\n  <component name=\"GitSEFilterConfiguration\">\n    <file-type-list>\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\n      <filtered-out-file-type name=\"TAG\" />\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\n    </file-type-list>\n  </component>\n  <component name=\"GithubPullRequestsUISettings\">\n    <option name=\"recentNewPullRequestHead\">\n      <RepoCoordinatesHolder>\n        <option name=\"owner\" value=\"StraightToJaneStreet\" />\n        <option name=\"repository\" value=\"RSLang\" />\n      </RepoCoordinatesHolder>\n    </option>\n  </component>\n  <component name=\"HighlightingSettingsPerFile\">\n    <setting file=\"file://$PROJECT_DIR$/node_modules/@reduxjs/toolkit/dist/query/endpointDefinitions.d.ts\" root0=\"SKIP_INSPECTION\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProblemsViewState\">\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Da9gJB57HljVn35gQmvnqpKhpf\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"Project.color\": \"3f0350\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"last_opened_file_path\": \"//wsl$/Ubuntu/home/laiker/RSLang/src/view/pages/Dictionary/HardWords\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.standard\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.standard\": \"\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"prettierjs.PrettierConfiguration.Package\": \"\\\\\\\\wsl$\\\\Ubuntu\\\\home\\\\laiker\\\\RSLang\\\\node_modules\\\\prettier\",\n    \"settings.editor.selected.configurable\": \"preferences.lookFeel\",\n    \"ts.external.directory.path\": \"\\\\\\\\wsl$\\\\Ubuntu\\\\home\\\\laiker\\\\RSLang\\\\node_modules\\\\typescript\\\\lib\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\src\\view\\pages\\Dictionary\\HardWords\" />\n      <recent name=\"\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\templates\" />\n      <recent name=\"\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\src\\services\\interfaces\" />\n      <recent name=\"\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\src\\core\" />\n      <recent name=\"\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\src\\model\\feature\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\" />\n      <recent name=\"\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\src\\services\\Utils\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"lint fix\" type=\"js.build_tools.npm\" temporary=\"true\" nameIsGenerated=\"true\">\n      <package-json value=\"$PROJECT_DIR$/package.json\" />\n      <command value=\"run\" />\n      <scripts>\n        <script value=\"lint\" />\n      </scripts>\n      <arguments value=\"fix\" />\n      <node-interpreter value=\"wsl://Ubuntu@/usr/local/bin/node\" />\n      <envs />\n      <method v=\"2\" />\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"npm.lint fix\" />\n        <item itemvalue=\"npm.lint fix\" />\n        <item itemvalue=\"npm.lint fix\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"0d1af047-13aa-4956-b14c-fe7a01128c12\" name=\"Default Changelist\" comment=\"\" />\n      <created>1660926439883</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1660926439883</updated>\n      <workItem from=\"1660926442645\" duration=\"181000\" />\n      <workItem from=\"1660926639839\" duration=\"200000\" />\n      <workItem from=\"1660926855880\" duration=\"448000\" />\n      <workItem from=\"1660927321478\" duration=\"142000\" />\n      <workItem from=\"1660927478065\" duration=\"188000\" />\n      <workItem from=\"1660927685146\" duration=\"3510000\" />\n      <workItem from=\"1661057243998\" duration=\"12298000\" />\n      <workItem from=\"1661074275543\" duration=\"21288000\" />\n      <workItem from=\"1661102029466\" duration=\"171000\" />\n      <workItem from=\"1661102326545\" duration=\"407000\" />\n      <workItem from=\"1661103043093\" duration=\"395000\" />\n      <workItem from=\"1661171891566\" duration=\"5387000\" />\n      <workItem from=\"1661182258022\" duration=\"6213000\" />\n      <workItem from=\"1661260269367\" duration=\"11502000\" />\n      <workItem from=\"1661350923548\" duration=\"4857000\" />\n      <workItem from=\"1661435407334\" duration=\"8448000\" />\n      <workItem from=\"1661623002998\" duration=\"1040000\" />\n      <workItem from=\"1661951337876\" duration=\"1797000\" />\n      <workItem from=\"1662053078982\" duration=\"2414000\" />\n      <workItem from=\"1662135119925\" duration=\"4188000\" />\n      <workItem from=\"1662189025970\" duration=\"10929000\" />\n      <workItem from=\"1662207673156\" duration=\"5536000\" />\n      <workItem from=\"1662214141148\" duration=\"2283000\" />\n      <workItem from=\"1662219654957\" duration=\"2805000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"auth-logout\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\n    <expand />\n    <select />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision d07a2f28a66043905abdb60e51c7c6faa943175e)
++++ b/.idea/workspace.xml	(date 1662483770730)
+@@ -4,16 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="c5829f39-023a-486e-8f69-cbf80c083344" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/src/view/pages/Dictionary/HardWords/index.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/model/api/private/userWords.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/api/private/userWords.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/model/feature/dictionary.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/feature/dictionary.ts" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/App.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/pages/Dictionary/WordCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/Dictionary/WordCard.tsx" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/view/pages/Dictionary/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/pages/Dictionary/index.tsx" afterDir="false" />
+-    </list>
++    <list default="true" id="c5829f39-023a-486e-8f69-cbf80c083344" name="Changes" comment="" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -32,7 +23,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="development" />
++        <entry key="$PROJECT_DIR$" value="last-day-features" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -68,22 +59,22 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Project.color": "3f0350",
+-    "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "//wsl$/Ubuntu/home/laiker/RSLang/src/view/pages/Dictionary/HardWords",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.standard": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.standard": "",
+-    "nodejs_package_manager_path": "npm",
+-    "prettierjs.PrettierConfiguration.Package": "\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\node_modules\\prettier",
+-    "settings.editor.selected.configurable": "preferences.lookFeel",
+-    "ts.external.directory.path": "\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\node_modules\\typescript\\lib",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Project.color&quot;: &quot;3f0350&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;//wsl$/Ubuntu/home/laiker/RSLang/src/view/pages/Dictionary/HardWords&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\node_modules\\prettier&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
++    &quot;ts.external.directory.path&quot;: &quot;\\\\wsl$\\Ubuntu\\home\\laiker\\RSLang\\node_modules\\typescript\\lib&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="\\wsl$\Ubuntu\home\laiker\RSLang\src\view\pages\Dictionary\HardWords" />
+@@ -111,6 +102,7 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="npm.lint fix" />
+         <item itemvalue="npm.lint fix" />
+         <item itemvalue="npm.lint fix" />
+         <item itemvalue="npm.lint fix" />
